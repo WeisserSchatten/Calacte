@@ -1,0 +1,34 @@
+* {
+	box-sizing: border-box;
+}
+
+@font-face{
+	font-family: Open-sans;
+	src: url(../fonts/Open-sans.ttf);
+}
+
+body, 
+h1,
+h2,
+h3,
+h4,
+a,
+p,
+ul {
+	font-family: Open-sans;
+	margin: 0;
+	color: #565656;
+}
+
+body {
+	background-color: #f4f4f4;
+}
+
+a {
+	text-decoration: none;
+}
+
+ul {
+	list-style-type: none;
+	padding: 0;
+}
