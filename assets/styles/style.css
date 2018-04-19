@@ -20,9 +20,6 @@ ul {
 	color: #565656;
 }
 
-body {
-	background-color: #f4f4f4;
-}
 
 a {
 	text-decoration: none;
@@ -33,4 +30,12 @@ ul {
 	padding: 0;
 }
 
+input,
+a {
+	outline: none;
+}
+
+body {
+	background-color: #f9f9f9;
+}
 

@@ -1,0 +1,13 @@
+.window-menu {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: calc(100vh - 62px);
+}
+
+.window-menu .container {
+	background-color: white;
+	width: 1300px;
+	height: 600px;
+}
