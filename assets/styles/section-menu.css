@@ -7,7 +7,16 @@
 }
 
 .window-menu .container {
+	position: relative;
 	background-color: white;
 	width: 1300px;
 	height: 600px;
+	border-radius: 10px;
+	box-shadow: 0 5px 5px  #565656;
+}
+
+.popular-movies-main-title {
+	font-size: 20px;
+	margin: 20px 0 20px 20px;
+	color: #651087;
 }
