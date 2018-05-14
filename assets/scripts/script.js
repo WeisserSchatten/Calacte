@@ -1,76 +1,70 @@
 $(document).ready(function() {
 	let popularMovieBlock = $('.popular-movies-element');
 	let photo = 'https://image.tmdb.org/t/p/w500';
-	let popularMuvie1 = {};
-	let popularMuvie2 = {};
-	let popularMuvie3 = {};
-	let popularMuvie4 = {};
-	let popularMuvie5 = {};
-	let popularMuvie6 = {};
-	let popularMuvie7 = {};
-	let popularMuvie8 = {};
-	let popularMuvie9 = {};
-	let popularMuvie10 = {};
-	let popularMuvie11 = {};
-	let popularMuvie12 = {};
-	let popularMuvie13 = {};
+	let moviesTitle = [];
+	let moviesPoster = [];
+	let moviesRating = [];
+	let moviesRelease = [],
+	contentRequest = '',
+	requestSearch = 'https://api.themoviedb.org/3/search/movie?',
+	requestDiscover = 'https://api.themoviedb.org/3/discover/movie?',
+	apiKey = 'api_key=eac8015fd29a0e835e0ccd821380429f',
+	totalTypeRequest = '',
+	totalRequest = '',
+	requestMovieName = '&query=',
+	requestDate = '&sort_by=primary_release_date.desc&year=';
+
 	$.getJSON('https://api.themoviedb.org/3/movie/popular?api_key=eac8015fd29a0e835e0ccd821380429f', function(result) {
-		console.log(result);
-		popularMuvie1 = {
-			title:result.results[0].original_title,
-			poster:result.results[0].poster_path
-		}
-		popularMuvie2 = {
-			title:result.results[1].original_title,
-			poster:result.results[1].poster_path
-		}
-		popularMuvie3 = {
-			title:result.results[2].original_title,
-			poster:result.results[2].poster_path
-		}
-		popularMuvie4 = {
-			title:result.results[3].original_title,
-			poster:result.results[3].poster_path
-		}
-		popularMuvie5 = {
-			title:result.results[4].original_title,
-			poster:result.results[4].poster_path
-		}
-		popularMuvie6 = {
-			title:result.results[5].original_title,
-			poster:result.results[5].poster_path
-		}
-		popularMuvie7 = {
-			title:result.results[6].original_title,
-			poster:result.results[6].poster_path
-		}
-		popularMuvie8 = {
-			title:result.results[7].original_title,
-			poster:result.results[7].poster_path
-		}
-		popularMuvie9 = {
-			title:result.results[8].original_title,
-			poster:result.results[8].poster_path
-		}
-		popularMuvie10 = {
-			title:result.results[9].original_title,
-			poster:result.results[9].poster_path
-		}
-		popularMuvie11 = {
-			title:result.results[10].original_title,
-			poster:result.results[10].poster_path
-		}
-		popularMuvie12 = {
-			title:result.results[11].original_title,
-			poster:result.results[11].poster_path
-		}
-		popularMuvie13 = {
-			title:result.results[12].original_title,
-			poster:result.results[12].poster_path
+
+		for (let i = 0; i < result.results.length; i++) {
+			moviesTitle.push(result.results[i].original_title);
+			moviesPoster.push(result.results[i].poster_path);
+			moviesRelease.push(result.results[i].release_date);
+			moviesRating.push(result.results[i].vote_average);
+			popularMovieBlock.prepend('<div class="gallery-item"><img src="' + photo + moviesPoster[i] + '" class="popular-muvie-poster"><div class="popular-muvie"><h2 class="popular-muvie-title">' + moviesTitle[i] + '</h2><p class="popular-muvie-text">Release Date:' + moviesRelease[i] + '</p><span class="popular-muvie-text-second">' + moviesRating[i] +'</span></div></div>')
 		}
 
-		popularMovieBlock.prepend('<img src="' + photo + popularMuvie13.poster + '"?>')
+		$(".owl-carousel").owlCarousel();
 	});
+
+	$('.js-input').click(function() {
+		$('.search-img').addClass('-visible');
+	});
+
+	function RequesT(){
+		if (contentRequest === null) {
+			return false;
+		} else if (contentRequest === Number ) {
+			totalTypeRequest = requestDate;
+			totalRequest = requestDiscover;
+			return totalTypeRequest;
+			return totalRequest;
+		} else {
+			totalTypeRequest = requestMovieName;
+			totalRequest = requestSearch;
+			return totalTypeRequest;
+			return totalRequest;
+		}
+	};
+
+	function getSearchWords() {
+		contentRequest = $('.js-input').val();
+		return contentRequest;
+	};
+
+	function mainRequest() {
+		getSearchWords();
+		RequesT();
+		$.getJSON(totalRequest + apiKey + totalTypeRequest + contentRequest, function(result) {
+			console.log(result);
+		});
+	}
+
+	$('.search-img').click(function() {
+		mainRequest();
+	});
+
+	
 });
 
 

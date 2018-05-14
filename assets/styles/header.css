@@ -8,6 +8,7 @@ header {
 header .container {
 	position: relative;
 	display: flex;
+	position: relative;
 	align-items: center;
 }
 
@@ -54,5 +55,13 @@ header .container {
 }
 
 .search-img {
+	position: absolute;
 	display: none;
+	top: 50%;
+	right: 50px;
+	transform: translateY(-50%);
+}
+
+.search-img.-visible {
+	display: inline-block;
 }

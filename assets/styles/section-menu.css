@@ -20,3 +20,48 @@
 	margin: 20px 0 20px 20px;
 	color: #651087;
 }
+
+.popular-movies-element {
+	position: relative;
+}
+
+.popular-muvie-poster {
+	height: 350px;
+}
+
+.gallery-item:hover .popular-muvie {
+	opacity: 1;
+	transition: .3s;
+}
+
+.gallery-item {
+	position: relative;
+	width: 233.328px;
+	height: 350px;
+	color: white;
+}
+
+.popular-muvie {
+	position: absolute;
+	background-color: rgba(0, 0, 0,0.5);
+	bottom: 0;
+	top: 0;
+	right: 0;
+	left: 0;
+	opacity: 0;
+}
+
+.popular-muvie-text {
+	text-align: center;
+	color: #f2f2f2;
+}
+
+.popular-muvie-title {
+	color: white;
+	text-align: center;
+	padding: 30px 0 15px 0;
+}
+
+.popular-movies-element {
+	margin-left: 50px;
+}
