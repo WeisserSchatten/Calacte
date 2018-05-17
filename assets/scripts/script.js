@@ -24,7 +24,22 @@ $(document).ready(function() {
 			popularMovieBlock.prepend('<div class="gallery-item"><img src="' + photo + moviesPoster[i] + '" class="popular-muvie-poster"><div class="popular-muvie"><h2 class="popular-muvie-title">' + moviesTitle[i] + '</h2><p class="popular-muvie-text">Release Date:' + moviesRelease[i] + '</p><span class="popular-muvie-text-second">' + moviesRating[i] +'</span></div></div>')
 		}
 
-		$(".owl-carousel").owlCarousel();
+		$(".owl-carousel").owlCarousel({
+			loop:true,
+		    margin:10,
+		    nav:true,
+		    responsive:{
+		        0:{
+		            items:1
+		        },
+		        600:{
+		            items:3
+		        },
+		        1000:{
+		            items:5
+		        }
+		    }
+				});
 	});
 
 	$('.js-input').click(function() {

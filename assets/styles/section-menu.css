@@ -9,7 +9,7 @@
 .window-menu .container {
 	position: relative;
 	background-color: white;
-	width: 1300px;
+	width: 1205px;
 	height: 600px;
 	border-radius: 10px;
 	box-shadow: 0 5px 5px  #565656;
@@ -62,6 +62,7 @@
 	padding: 30px 0 15px 0;
 }
 
-.popular-movies-element {
-	margin-left: 50px;
+.owl-prev,
+.owl-next {
+	display: none;
 }
