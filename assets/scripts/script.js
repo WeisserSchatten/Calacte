@@ -1,10 +1,15 @@
 $(document).ready(function() {
-	let popularMovieBlock = $('.popular-movies-element');
+	let popularMovieBlock = $('.popular-movies-element'),
+	answerMovieBlock = $('.answer');
 	let photo = 'https://image.tmdb.org/t/p/w500';
 	let moviesTitle = [];
 	let moviesPoster = [];
 	let moviesRating = [];
-	let moviesRelease = [],
+	let moviesRelease = [];
+	let answerMoviesTitle = [];
+	let answerMoviesPoster = [];
+	let answerMoviesRating = [];
+	let answerMoviesRelease = [],
 	contentRequest = '',
 	requestSearch = 'https://api.themoviedb.org/3/search/movie?',
 	requestDiscover = 'https://api.themoviedb.org/3/discover/movie?',
@@ -12,7 +17,7 @@ $(document).ready(function() {
 	totalTypeRequest = '',
 	totalRequest = '',
 	requestMovieName = '&query=',
-	requestDate = '&sort_by=primary_release_date.desc&year=';
+	requestDate = '&sort_by=popularity.asc&primary_release_year=';
 
 	$.getJSON('https://api.themoviedb.org/3/movie/popular?api_key=eac8015fd29a0e835e0ccd821380429f', function(result) {
 
@@ -49,16 +54,20 @@ $(document).ready(function() {
 	function RequesT(){
 		if (contentRequest === null) {
 			return false;
-		} else if (contentRequest === Number ) {
-			totalTypeRequest = requestDate;
-			totalRequest = requestDiscover;
-			return totalTypeRequest;
-			return totalRequest;
-		} else {
+		} else if (!isNumeric(contentRequest)) {
 			totalTypeRequest = requestMovieName;
 			totalRequest = requestSearch;
-			return totalTypeRequest;
-			return totalRequest;
+			return {
+				totalTypeRequest: totalTypeRequest,
+				totalRequest: totalRequest
+			};
+		} else {
+			totalTypeRequest = requestDate;
+			totalRequest = requestDiscover;
+			return {
+				totalTypeRequest: totalTypeRequest,
+				totalRequest: totalRequest
+			};
 		}
 	};
 
@@ -67,11 +76,21 @@ $(document).ready(function() {
 		return contentRequest;
 	};
 
+	function isNumeric(n) {
+		return !isNaN(parseFloat(n)) && isFinite(n);
+	};
+
 	function mainRequest() {
 		getSearchWords();
 		RequesT();
 		$.getJSON(totalRequest + apiKey + totalTypeRequest + contentRequest, function(result) {
-			console.log(result);
+			for (let i = 0; i < result.results.length; i++) {
+			answerMoviesTitle.push(result.results[i].original_title);
+			answerMoviesPoster.push(result.results[i].poster_path);
+			answerMoviesRelease.push(result.results[i].release_date);
+			answerMoviesRating.push(result.results[i].vote_average);
+			answerMovieBlock.prepend('<div class="gallery-item"><img src="' + photo + moviesPoster[i] + '" class="popular-muvie-poster"><div class="popular-muvie"><h2 class="popular-muvie-title">' + moviesTitle[i] + '</h2><p class="popular-muvie-text">Release Date:' + moviesRelease[i] + '</p><span class="popular-muvie-text-second">' + moviesRating[i] +'</span></div></div>')
+			}
 		});
 	}
 
@@ -79,8 +98,13 @@ $(document).ready(function() {
 		mainRequest();
 	});
 
-	
+	setTimeout(function() {
+		$('.answer').addClass('-animated');
+		// $('.background').addClass('-animated');
+	}, 1000)
 });
+	
+
 
 
 

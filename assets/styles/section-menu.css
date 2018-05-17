@@ -1,4 +1,6 @@
 .window-menu {
+	position: relative;
+	/*z-index: -10;*/
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -65,4 +67,19 @@
 .owl-prev,
 .owl-next {
 	display: none;
+}
+
+.background {
+	position: absolute;
+	background-color: rgba(0, 0, 0,0.5);
+	display: none;
+	z-index: -2;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+}
+
+.background.-animated {
+	display: inline-block;
 }
