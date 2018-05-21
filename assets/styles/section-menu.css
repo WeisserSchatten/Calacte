@@ -1,6 +1,5 @@
 .window-menu {
 	position: relative;
-	/*z-index: -10;*/
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -43,7 +42,8 @@
 	color: white;
 }
 
-.popular-muvie {
+.popular-muvie,
+.answer-muvie {
 	position: absolute;
 	background-color: rgba(0, 0, 0,0.5);
 	bottom: 0;
@@ -82,4 +82,44 @@
 
 .background.-animated {
 	display: inline-block;
+}
+
+.carousel {
+	width: 100%;
+}
+
+.answer-muvie-poster {
+	height: 195px;
+}
+
+.carousel {
+	width: calc(100vw - 50px);
+	height: 195px;
+	overflow: auto;
+}
+
+.gallery-item-answer {
+	float: left;
+	position: relative;
+	color: white;
+}
+
+.gallery-item-answer:hover .answer-muvie {
+	opacity: 1;
+	transition: .3s;
+}
+
+.answer-muvie-title {
+	color: white;
+	padding: 20px 0;
+	text-align: center;
+	font-size: 18px;
+}
+
+.answer-muvie-text,
+.answer-muvie-text-second {
+	color: white;
+	padding: 8px 0;
+	text-align: center;
+	font-size: 15px;
 }
