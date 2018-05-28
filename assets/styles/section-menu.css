@@ -84,16 +84,13 @@
 	display: inline-block;
 }
 
-.carousel {
-	width: 100%;
-}
-
 .answer-muvie-poster {
 	height: 195px;
 }
 
 .carousel {
-	width: calc(100vw - 50px);
+	position: relative;
+	width: calc(100vw - 63px);
 	height: 195px;
 	overflow: auto;
 }
@@ -122,4 +119,16 @@
 	padding: 8px 0;
 	text-align: center;
 	font-size: 15px;
+}
+
+.eror-title {
+	position: absolute;
+	top: 20px;
+	left: 200px;
+	font-size: 30px;
+}
+
+.star {
+	width: 16px !important;
+	float: left;
 }
