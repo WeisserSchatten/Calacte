@@ -16,13 +16,11 @@ $(document).ready(function() {
 
 
 	$.getJSON(basePath + 'movie/popular?' + apiKey, function(result) {
-
 		if (result.results.length !== 0) {
 			for (let i = 0; i < result.results.length; i++) {
-				let movie = result.results[i];
-				popularMovieBlock.append('<div class="gallery-item"><img src="' + imgPath + movie.poster_path + '" class="popular-muvie-poster"><div class="popular-muvie"><h2 class="popular-muvie-title">' + movie.original_title + '</h2><p class="popular-muvie-text">Release Date:' + movie.release_date + '</p><span class="popular-muvie-text-second">' + getRatingView(movie.vote_average) +'</span></div></div>')
+				let movies = result.results[i];
+				popularMovieBlock.append('<div class="gallery-item"><img src="' + imgPath + movies.poster_path + '" class="popular-muvie-poster"><div class="popular-muvie gallery"><h2 class="popular-muvie-title muvie-title">' + movies.original_title + '</h2><p class="popular-muvie-text">Release Date:' + movies.release_date + '</p><span class="popular-muvie-text-second">' + getRatingView(movies.vote_average) +'</span></div></div>')
 			}
-
 			$(".owl-carousel").owlCarousel({
 				loop:true,
 			    margin:10,
@@ -95,45 +93,53 @@ $(document).ready(function() {
 		 if (!isNumeric(contentRequest)) {
 			
 			$.getJSON(basePath + reqSearch + apiKey + reqQuery + contentRequest, function(result) {
-				if (result !== null) {
+				console.log(result);
+				if (result.total_results !== 0) {
 					for (let i = 0; i < result.results.length; i++) {
 						let movie = result.results[i];
-						answerMovieBlock.append('<div class="gallery-item-answer"><img src="' + imgPath + movie.poster_path + '" class="answer-muvie-poster"><div class="answer-muvie"><h2 class="answer-muvie-title">' + movie.original_title + '</h2><p class="answer-muvie-text">Release Date:' + movie.release_date + '</p><span class="answer-muvie-text-second">' + getRatingView(movie.vote_average) +'</span></div></div>');
+						answerMovieBlock.append('<div class="gallery-item-answer gallery"><img src="' + imgPath + movie.poster_path + '" class="answer-muvie-poster"><div class="answer-muvie gallery"><h2 class="answer-muvie-title muvie-title">' + movie.original_title + '</h2><p class="answer-muvie-text">Release Date:' + movie.release_date + '</p><span class="answer-muvie-text-second">' + getRatingView(movie.vote_average) +'</span></div></div>');
 					}
 				} else {
+					answerMovieBlock.html('');
+					showEror();
 					answerMovieBlock.append(gifFearHtml + '<span class="eror-title">Query data not found...</span>');
 				}
 			});
 			
 		} else {
 			$.getJSON(basePath + reqDiscover + apiKey + reqData + contentRequest, function(result) {
-				if (result !== null) {
+				if (result.total_results !== 0) {
 					for (let i = 0; i < result.results.length; i++) {
 						let movie = result.results[i];
-						// function roundRating() {
-						// 	let value = Math.round(movie.vote_average);
-						// 	for (let i = 0; i < value; i++) {
-
-						// 	}
-						// }
-						answerMovieBlock.append('<div class="gallery-item-answer"><img src="' + imgPath + movie.poster_path + '" class="answer-muvie-poster"><div class="answer-muvie"><h2 class="answer-muvie-title">' + movie.original_title + '</h2><p class="answer-muvie-text">Release Date:' + movie.release_date + '</p><span class="answer-muvie-text-second">' + getRatingView(movie.vote_average) +'</span></div></div>');
+						answerMovieBlock.append('<div class="gallery-item-answer gallery"><img src="' + imgPath + movie.poster_path + '" class="answer-muvie-poster"><div class="answer-muvie gallery"><h2 class="answer-muvie-title muvie-title">' + movie.original_title + '</h2><p class="answer-muvie-text">Release Date:' + movie.release_date + '</p><span class="answer-muvie-text-second">' + getRatingView(movie.vote_average) +'</span></div></div>');
 					}
 				} else {
-					answerMovieBlock.append(gifFearHtml + '<span  class="eror-title">Query data not found...</span>');
+					answerMovieBlock.html('');
+					showEror();
+					answerMovieBlock.append(gifFearHtml + '<span class="eror-title gallery">Query data not found...</span>');
 				}
 			});
 		}
 	};
 
 	function getRatingView(rating) {
-		let result = '<div class="stars">',
-		value = Math.round(rating);
+		let result = '<div class="stars"><p>Rating:</p>',
+		value = Math.round(rating),
+		valueSecond = 10 - value;
 		for (let i = 0; i < value; i++) {
 			result += '<img src="assets/images/star.png" class="star">';
+		}
+		for (let i = 0; i < valueSecond; i++) {
+			result += '<img src="assets/images/sick-star.png" class="star">';
 		}
 		result += '</div>';
 		return result;
 	}
 
-
+	$('.gallery').click(function() {
+		contentRequest = $('.muvie-title')
+		$.getJSON(basePath + reqSearch + apiKey + reqQuery + contentRequest, function(result) {
+			console.log(result);
+		});
+	});
 });
