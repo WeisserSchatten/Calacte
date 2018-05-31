@@ -12,33 +12,41 @@ $(document).ready(function() {
 		  gifFearHtml = '<iframe src="https://giphy.com/embed/7tKrRNo6MwlZC"; width="180" height="180" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>';
 
 	let popularMovieBlock = $('.popular-movies-element'),
-		answerMovieBlock = $('.answer-block');
+		answerMovieBlock = $('.answer-block'),
+		firstSearch = [],
+		searchResults = [];
 
+	function showBaseMoviews() {
+		$.getJSON(basePath + 'movie/popular?' + apiKey, function(result) {
+			if (result.results.length !== 0) {
+				firstSearch = result.results;
+				for (let i = 0; i < result.results.length; i++) {
+					let movies = result.results[i];
+					popularMovieBlock.append('<div class="gallery-item"><img src="' + imgPath + movies.poster_path + '" class="popular-muvie-poster"><div class="popular-muvie "><h2 class="popular-muvie-title muvie-title">' + movies.original_title + '</h2><p class="popular-muvie-text">Release Date:' + movies.release_date + '</p><div class="popular-muvie-text-second">' + getRatingView(movies.vote_average) + '</div><span class="raiting-number">' + movies.vote_average + '</span></div></div>');
 
-	$.getJSON(basePath + 'movie/popular?' + apiKey, function(result) {
-		if (result.results.length !== 0) {
-			for (let i = 0; i < result.results.length; i++) {
-				let movies = result.results[i];
-				popularMovieBlock.append('<div class="gallery-item"><img src="' + imgPath + movies.poster_path + '" class="popular-muvie-poster"><div class="popular-muvie gallery"><h2 class="popular-muvie-title muvie-title">' + movies.original_title + '</h2><p class="popular-muvie-text">Release Date:' + movies.release_date + '</p><span class="popular-muvie-text-second">' + getRatingView(movies.vote_average) +'</span></div></div>')
+				}
+				$(".owl-carousel").owlCarousel({
+					loop:true,
+				    margin:10,
+				    nav:true,
+				    responsive:{
+				        0:{
+				            items:1
+				        },
+				        600:{
+				            items:3
+				        },
+				        1000:{
+				            items:5
+				        }
+				    }
+				});
+				return firstSearch;
 			}
-			$(".owl-carousel").owlCarousel({
-				loop:true,
-			    margin:10,
-			    nav:true,
-			    responsive:{
-			        0:{
-			            items:1
-			        },
-			        600:{
-			            items:3
-			        },
-			        1000:{
-			            items:5
-			        }
-			    }
-			});
-		}
-	});
+		});	
+	};
+
+	showBaseMoviews();
 
 	$('.search-img').click(function() {
 		getSearchWords();
@@ -93,30 +101,34 @@ $(document).ready(function() {
 		 if (!isNumeric(contentRequest)) {
 			
 			$.getJSON(basePath + reqSearch + apiKey + reqQuery + contentRequest, function(result) {
-				console.log(result);
 				if (result.total_results !== 0) {
+					searchResults = result.results;
 					for (let i = 0; i < result.results.length; i++) {
 						let movie = result.results[i];
-						answerMovieBlock.append('<div class="gallery-item-answer gallery"><img src="' + imgPath + movie.poster_path + '" class="answer-muvie-poster"><div class="answer-muvie gallery"><h2 class="answer-muvie-title muvie-title">' + movie.original_title + '</h2><p class="answer-muvie-text">Release Date:' + movie.release_date + '</p><span class="answer-muvie-text-second">' + getRatingView(movie.vote_average) +'</span></div></div>');
+						answerMovieBlock.append('<div class="gallery-item-answer main-gallary" ><img src="' + imgPath + movie.poster_path + '" class="answer-muvie-poster"><div class="answer-muvie hover"><h2 class="answer-muvie-title muvie-title">' + movie.original_title + '</h2><p class="answer-muvie-text">Release Date:' + movie.release_date + '</p><div class="answer-muvie-text-second">' + getRatingView(movie.vote_average)  + '<span>' + movies.vote_average + '</span></div></div></div>');
 					}
+					return searchResults;
 				} else {
 					answerMovieBlock.html('');
 					showEror();
 					answerMovieBlock.append(gifFearHtml + '<span class="eror-title">Query data not found...</span>');
 				}
+				
 			});
 			
 		} else {
 			$.getJSON(basePath + reqDiscover + apiKey + reqData + contentRequest, function(result) {
 				if (result.total_results !== 0) {
+					searchResults = result.results;
 					for (let i = 0; i < result.results.length; i++) {
 						let movie = result.results[i];
-						answerMovieBlock.append('<div class="gallery-item-answer gallery"><img src="' + imgPath + movie.poster_path + '" class="answer-muvie-poster"><div class="answer-muvie gallery"><h2 class="answer-muvie-title muvie-title">' + movie.original_title + '</h2><p class="answer-muvie-text">Release Date:' + movie.release_date + '</p><span class="answer-muvie-text-second">' + getRatingView(movie.vote_average) +'</span></div></div>');
+						answerMovieBlock.append('<div class="gallery-item-answer "><img src="' + imgPath + movie.poster_path + '" class="answer-muvie-poster"><div class="answer-muvie"><h2 class="answer-muvie-title muvie-title">' + movie.original_title + '</h2><p class="answer-muvie-text">Release Date:' + movie.release_date + '</p><div class="answer-muvie-text-second">' + getRatingView(movie.vote_average) + '<span>' + movies.vote_average + '</span></div></div></div>');
 					}
+					return searchResults;
 				} else {
 					answerMovieBlock.html('');
 					showEror();
-					answerMovieBlock.append(gifFearHtml + '<span class="eror-title gallery">Query data not found...</span>');
+					answerMovieBlock.append(gifFearHtml + '<span class="eror-title">Query data not found...</span>');
 				}
 			});
 		}
@@ -134,12 +146,8 @@ $(document).ready(function() {
 		}
 		result += '</div>';
 		return result;
-	}
-
-	$('.gallery').click(function() {
-		contentRequest = $('.muvie-title')
-		$.getJSON(basePath + reqSearch + apiKey + reqQuery + contentRequest, function(result) {
-			console.log(result);
-		});
+	};
+	$('.hover').click(function() {
+		console.log($(this).parent('.hover2').index());
 	});
 });

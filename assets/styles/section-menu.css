@@ -9,6 +9,7 @@
 
 .window-menu .container {
 	position: relative;
+	z-index: 1;
 	background-color: white;
 	width: 1205px;
 	height: 600px;
@@ -69,20 +70,6 @@
 	display: none;
 }
 
-.background {
-	position: absolute;
-	background-color: rgba(0, 0, 0,0.5);
-	display: none;
-	z-index: -2;
-	left: 0;
-	right: 0;
-	top: 0;
-	bottom: 0;
-}
-
-.background.-animated {
-	display: inline-block;
-}
 
 .answer-muvie-poster {
 	height: 195px;
@@ -131,4 +118,28 @@
 .star {
 	width: 16px !important;
 	float: left;
+}
+
+.star:nth-child(2) {
+	margin-left: 15%;
+}
+
+.stars p {
+	margin-left: 10%;
+	color: white;
+}
+
+.stars {
+	position: absolute;
+	width: 100%;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.raiting-number {
+	position: absolute;
+	top: 72%;
+	left: 50%;
+	transform: translate(-50%,-72%);
+	font-size: 50px;
 }
