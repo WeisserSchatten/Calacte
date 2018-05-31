@@ -23,7 +23,7 @@ $(document).ready(function() {
 				for (let i = 0; i < result.results.length; i++) {
 					let movies = result.results[i];
 					popularMovieBlock.append('<div class="gallery-item"><img src="' + imgPath + movies.poster_path + '" class="popular-muvie-poster"><div class="popular-muvie "><h2 class="popular-muvie-title muvie-title">' + movies.original_title + '</h2><p class="popular-muvie-text">Release Date:' + movies.release_date + '</p><div class="popular-muvie-text-second">' + getRatingView(movies.vote_average) + '</div><span class="raiting-number">' + movies.vote_average + '</span></div></div>');
-
+						console.log(result);
 				}
 				$(".owl-carousel").owlCarousel({
 					loop:true,
@@ -104,8 +104,9 @@ $(document).ready(function() {
 				if (result.total_results !== 0) {
 					searchResults = result.results;
 					for (let i = 0; i < result.results.length; i++) {
+						console.log(result);
 						let movie = result.results[i];
-						answerMovieBlock.append('<div class="gallery-item-answer main-gallary" ><img src="' + imgPath + movie.poster_path + '" class="answer-muvie-poster"><div class="answer-muvie hover"><h2 class="answer-muvie-title muvie-title">' + movie.original_title + '</h2><p class="answer-muvie-text">Release Date:' + movie.release_date + '</p><div class="answer-muvie-text-second">' + getRatingView(movie.vote_average)  + '<span>' + movies.vote_average + '</span></div></div></div>');
+						answerMovieBlock.append('<div class="gallery-item-answer main-gallary" ><img src="' + imgPath + movie.poster_path + '" class="answer-muvie-poster"><div class="answer-muvie hover"><h2 class="answer-muvie-title muvie-title">' + movie.original_title + '</h2><p class="answer-muvie-text">Release Date:' + movie.release_date + '</p></div></div>');
 					}
 					return searchResults;
 				} else {
@@ -122,7 +123,7 @@ $(document).ready(function() {
 					searchResults = result.results;
 					for (let i = 0; i < result.results.length; i++) {
 						let movie = result.results[i];
-						answerMovieBlock.append('<div class="gallery-item-answer "><img src="' + imgPath + movie.poster_path + '" class="answer-muvie-poster"><div class="answer-muvie"><h2 class="answer-muvie-title muvie-title">' + movie.original_title + '</h2><p class="answer-muvie-text">Release Date:' + movie.release_date + '</p><div class="answer-muvie-text-second">' + getRatingView(movie.vote_average) + '<span>' + movies.vote_average + '</span></div></div></div>');
+						answerMovieBlock.append('<div class="gallery-item-answer "><img src="' + imgPath + movie.poster_path + '" class="answer-muvie-poster"><div class="answer-muvie"><h2 class="answer-muvie-title muvie-title">' + movie.original_title + '</h2><p class="answer-muvie-text">Release Date:' + movie.release_date + '</p></div></div>');
 					}
 					return searchResults;
 				} else {
@@ -147,7 +148,15 @@ $(document).ready(function() {
 		result += '</div>';
 		return result;
 	};
-	$('.hover').click(function() {
-		console.log($(this).parent('.hover2').index());
+	
+	answerMovieBlock.on('click', '.gallery-item-answer', function() {
+		let indexMovies;
+		indexMovies = $(this).index();
+		$('.popular-movies').addClass('-invisible');
+		$('.movies-info').html('<img src="' + imgPath + searchResults[indexMovies].poster_path + '" class="movies-info-poster"><div class="movies-info-text"><h2 class="movies-info-title">' + searchResults[indexMovies].original_title + '</h2><span class="movies-info-release-date">Release Date: ' + searchResults[indexMovies].release_date + '</span><div class="info-muvie-text-second">' + getRatingView(searchResults[indexMovies].vote_average) + '</div><p class="movies-info-description">' + searchResults[indexMovies].overview + '</p></div>')
+	});
+	$('.menu').click(function() {
+		$('.popular-movies').addClass('-invisible');
+		$('.movies-info').html();
 	});
 });
