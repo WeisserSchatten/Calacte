@@ -156,7 +156,7 @@ $(document).ready(function() {
 		$('.movies-info').html('<img src="' + imgPath + searchResults[indexMovies].poster_path + '" class="movies-info-poster"><div class="movies-info-text"><h2 class="movies-info-title">' + searchResults[indexMovies].original_title + '</h2><span class="movies-info-release-date">Release Date: ' + searchResults[indexMovies].release_date + '</span><div class="info-muvie-text-second">' + getRatingView(searchResults[indexMovies].vote_average) + '</div><p class="movies-info-description">' + searchResults[indexMovies].overview + '</p></div>')
 	});
 	$('.menu').click(function() {
-		$('.popular-movies').remuveClass('-invisible');
-		$('.movies-info').html();
+		$('.popular-movies').removeClass('-invisible');
+		$('.movies-info').html('');
 	});
 });
